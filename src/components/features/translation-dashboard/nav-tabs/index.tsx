@@ -1,5 +1,6 @@
 "use client"
 
+import { useTheme } from "@/src/hooks/use-theme"
 import styles from "./nav-tabs.module.css"
 import { BarChart2, Activity, FileText, GitCompare, Layers } from "lucide-react"
 
@@ -11,10 +12,12 @@ interface NavTabsProps {
 }
 
 export function NavTabs({ activeTab, setActiveTab }: NavTabsProps) {
+  const { isDark } = useTheme()
+
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${isDark ? styles.containerDark : ""} theme-transition`}>
       <button
-        className={`${styles.tab} ${activeTab === "overview" ? styles.active : ""}`}
+        className={`${styles.tab} ${activeTab === "overview" ? styles.active : ""} theme-transition`}
         onClick={() => setActiveTab("overview")}
         aria-selected={activeTab === "overview"}
       >
@@ -22,7 +25,7 @@ export function NavTabs({ activeTab, setActiveTab }: NavTabsProps) {
         <span>Overview</span>
       </button>
       <button
-        className={`${styles.tab} ${activeTab === "metrics" ? styles.active : ""}`}
+        className={`${styles.tab} ${activeTab === "metrics" ? styles.active : ""} theme-transition`}
         onClick={() => setActiveTab("metrics")}
         aria-selected={activeTab === "metrics"}
       >
@@ -30,7 +33,7 @@ export function NavTabs({ activeTab, setActiveTab }: NavTabsProps) {
         <span>Metrics</span>
       </button>
       <button
-        className={`${styles.tab} ${activeTab === "performance" ? styles.active : ""}`}
+        className={`${styles.tab} ${activeTab === "performance" ? styles.active : ""} theme-transition`}
         onClick={() => setActiveTab("performance")}
         aria-selected={activeTab === "performance"}
       >
@@ -38,7 +41,7 @@ export function NavTabs({ activeTab, setActiveTab }: NavTabsProps) {
         <span>Performance</span>
       </button>
       <button
-        className={`${styles.tab} ${activeTab === "comparison" ? styles.active : ""}`}
+        className={`${styles.tab} ${activeTab === "comparison" ? styles.active : ""} theme-transition`}
         onClick={() => setActiveTab("comparison")}
         aria-selected={activeTab === "comparison"}
       >
@@ -46,7 +49,7 @@ export function NavTabs({ activeTab, setActiveTab }: NavTabsProps) {
         <span>Comparison</span>
       </button>
       <button
-        className={`${styles.tab} ${activeTab === "integration" ? styles.active : ""}`}
+        className={`${styles.tab} ${activeTab === "integration" ? styles.active : ""} theme-transition`}
         onClick={() => setActiveTab("integration")}
         aria-selected={activeTab === "integration"}
       >

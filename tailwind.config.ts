@@ -52,6 +52,13 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Custom colors for metric cards
+        emerald: "hsl(var(--emerald))",
+        blue: "hsl(var(--blue))",
+        purple: "hsl(var(--purple))",
+        orange: "hsl(var(--orange))",
+        rose: "hsl(var(--rose))",
+        cyan: "hsl(var(--cyan))",
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -115,9 +115,9 @@
 
 /* Add theme-transition class to elements that should transition smoothly */
 .card {
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  @apply theme-transition;
 }
 
 .button {
-  transition: background-color 0.2s ease, color 0.2s ease;
+  @apply theme-transition;
 }

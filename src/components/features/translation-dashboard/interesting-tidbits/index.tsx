@@ -1,12 +1,18 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ChevronRight } from "lucide-react"
 import styles from "./interesting-tidbits.module.css"
 import { tidbitsData } from "@/src/data/insights/tidbits-data"
 
 export function InterestingTidbits() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
+  const [mounted, setMounted] = useState(false)
+
+  // Ensure component is mounted before rendering to prevent hydration issues
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const toggleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index)
@@ -105,6 +111,9 @@ export function InterestingTidbits() {
 
     return iconTypes[index % iconTypes.length]
   }
+
+  // Don't render until client-side to prevent hydration issues
+  if (!mounted) return null
 
   return (
     <div className={styles.container}>

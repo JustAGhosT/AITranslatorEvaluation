@@ -10,16 +10,15 @@ interface Props {
 interface State {
   hasError: boolean
   error: Error | null
-  errorInfo: ErrorInfo | null
 }
 
 export class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
-    this.state = { hasError: false, error: null, errorInfo: null }
+    this.state = { hasError: false, error: null }
   }
 
-  static getDerivedStateFromError(error: Error): Partial<State> {
+  static getDerivedStateFromError(error: Error): State {
     // Update state so the next render will show the fallback UI
     return { hasError: true, error }
   }
@@ -27,7 +26,6 @@ export class ErrorBoundary extends Component<Props, State> {
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     // Log the error to console
     console.error("ErrorBoundary caught an error:", error, errorInfo)
-    this.setState({ errorInfo })
   }
 
   render(): ReactNode {
@@ -53,13 +51,10 @@ export class ErrorBoundary extends Component<Props, State> {
               </svg>
             </div>
             <h3 className="text-xl font-semibold mb-2">Something went wrong</h3>
-            <p className="text-gray-600 mb-4">{this.state.error?.message || "An unexpected error occurred"}</p>
-            <div className="bg-gray-100 p-4 rounded-md text-left overflow-auto max-w-full mb-4">
-              <pre className="text-xs">{this.state.error?.stack}</pre>
-            </div>
+            <p className="text-gray-600 mb-4">Could not load translation data. Please try again later.</p>
             <button
               onClick={() => window.location.reload()}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
             >
               Retry
             </button>

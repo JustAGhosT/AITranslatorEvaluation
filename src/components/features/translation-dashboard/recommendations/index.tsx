@@ -1,3 +1,6 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import { Card } from "@/src/components/ui/card"
 import styles from "./recommendations.module.css"
 
@@ -12,6 +15,17 @@ interface RecommendationsProps {
 }
 
 export function Recommendations({ data }: RecommendationsProps) {
+  const [mounted, setMounted] = useState(false)
+
+  // Only show the component after first render to avoid hydration issues
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return null
+  }
+
   return (
     <Card className={styles.container}>
       <h2 className={styles.title}>Final Recommendations</h2>

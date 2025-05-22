@@ -7,17 +7,17 @@ import { useEffect, useState } from "react"
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   const [mounted, setMounted] = useState(false)
 
-  // Ensure theme is applied after hydration to avoid mismatch
+  // Prevent flash of incorrect theme
   useEffect(() => {
+    const theme = localStorage.getItem("theme") || "system"
+    // Add theme class to document for immediate styling before hydration
+    if (theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+      document.documentElement.classList.add("dark")
+    } else {
+      document.documentElement.classList.remove("dark")
+    }
     setMounted(true)
   }, [])
-
-  // Apply a class to the body to indicate the component is mounted
-  useEffect(() => {
-    if (mounted) {
-      document.body.classList.add("theme-mounted")
-    }
-  }, [mounted])
 
   return (
     <NextThemesProvider
@@ -25,10 +25,10 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
       defaultTheme="system"
       enableSystem
       disableTransitionOnChange={false}
-      storageKey="theme-preference"
+      storageKey="theme"
       {...props}
     >
-      {children}
+      {mounted ? children : null}
     </NextThemesProvider>
   )
 }

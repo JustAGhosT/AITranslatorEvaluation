@@ -3,6 +3,7 @@
 import { TrendingUp, Award, Globe, Zap, Users, DollarSign } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { useTheme } from "@/src/hooks/use-theme"
 import styles from "./executive-summary.module.css"
 
 interface ExecutiveSummaryProps {
@@ -10,6 +11,8 @@ interface ExecutiveSummaryProps {
 }
 
 export function ExecutiveSummary({ data }: ExecutiveSummaryProps) {
+  const { isDark } = useTheme()
+
   const summaryMetrics = [
     {
       id: "accuracy",
@@ -110,7 +113,7 @@ export function ExecutiveSummary({ data }: ExecutiveSummaryProps) {
   ]
 
   return (
-    <section className={styles.container}>
+    <section className={`${styles.container} theme-transition`}>
       <div className={styles.header}>
         <div className={styles.titleSection}>
           <h2 className={styles.title}>Executive Summary</h2>
@@ -132,12 +135,16 @@ export function ExecutiveSummary({ data }: ExecutiveSummaryProps) {
           return (
             <Card
               key={metric.id}
-              className={`${styles.metricCard} ${styles[`card${index + 1}`]} ${metric.borderColor} ${metric.darkBorderColor}`}
+              className={`${styles.metricCard} ${styles[`card${index + 1}`]} ${metric.borderColor} ${
+                metric.darkBorderColor
+              } theme-transition`}
             >
               <CardHeader className={styles.cardHeader}>
                 <div className={styles.iconContainer}>
                   <div
-                    className={`${styles.iconWrapper} bg-gradient-to-br ${metric.bgGradient} dark:bg-gradient-to-br dark:${metric.darkBgGradient}`}
+                    className={`${styles.iconWrapper} bg-gradient-to-br ${metric.bgGradient} dark:bg-gradient-to-br dark:${
+                      metric.darkBgGradient
+                    } theme-transition`}
                   >
                     <Icon className={`${styles.icon} ${metric.iconColor} ${metric.darkIconColor}`} />
                   </div>
@@ -156,9 +163,9 @@ export function ExecutiveSummary({ data }: ExecutiveSummaryProps) {
                   <span className={styles.description}>{metric.description}</span>
                 </div>
                 <div className={styles.progressContainer}>
-                  <div className={styles.progressBar}>
+                  <div className={`${styles.progressBar} theme-transition`}>
                     <div
-                      className={`${styles.progress} ${styles[`progress${metric.color}`]}`}
+                      className={`${styles.progress} ${styles[`progress${metric.color}`]} theme-transition`}
                       style={{ width: metric.value }}
                     />
                   </div>
@@ -174,7 +181,7 @@ export function ExecutiveSummary({ data }: ExecutiveSummaryProps) {
       </div>
 
       <div className={styles.insights}>
-        <Card className={styles.insightsCard}>
+        <Card className={`${styles.insightsCard} theme-transition`}>
           <CardHeader>
             <CardTitle className={styles.insightsTitle}>Key Performance Insights</CardTitle>
           </CardHeader>
@@ -182,7 +189,7 @@ export function ExecutiveSummary({ data }: ExecutiveSummaryProps) {
             <div className={styles.insightsList}>
               <div className={styles.insight}>
                 <div className={styles.insightIcon}>
-                  <TrendingUp className="w-4 h-4 text-emerald-600" />
+                  <TrendingUp className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 </div>
                 <div className={styles.insightText}>
                   <strong>Translation accuracy leads the market</strong> with DeepL achieving 95% accuracy in technical
@@ -191,7 +198,7 @@ export function ExecutiveSummary({ data }: ExecutiveSummaryProps) {
               </div>
               <div className={styles.insight}>
                 <div className={styles.insightIcon}>
-                  <Zap className="w-4 h-4 text-blue-600" />
+                  <Zap className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div className={styles.insightText}>
                   <strong>Real-time performance excels</strong> with Google Translate delivering sub-second response
@@ -200,7 +207,7 @@ export function ExecutiveSummary({ data }: ExecutiveSummaryProps) {
               </div>
               <div className={styles.insight}>
                 <div className={styles.insightIcon}>
-                  <Users className="w-4 h-4 text-rose-600" />
+                  <Users className="w-4 h-4 text-rose-600 dark:text-rose-400" />
                 </div>
                 <div className={styles.insightText}>
                   <strong>User satisfaction remains high</strong> across all platforms, with 91.7% of users rating their

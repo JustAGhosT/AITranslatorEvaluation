@@ -2,49 +2,101 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 0.5rem;
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--text-secondary);
+  background-color: transparent;
+  border: none;
+  color: hsl(var(--foreground));
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .themeToggle:hover {
-  background-color: var(--hover-overlay);
-  color: var(--text-primary);
+  background-color: hsl(var(--secondary));
+  transform: translateY(-1px);
+}
+
+.themeToggle:active {
+  transform: translateY(0);
+  transition-duration: 0.1s;
 }
 
 .themeToggle:focus-visible {
-  outline: 2px solid var(--ring);
+  outline: 2px solid hsl(var(--ring));
   outline-offset: 2px;
-}
-
-.placeholder {
-  width: 2.25rem;
-  height: 2.25rem;
 }
 
 .icon {
   width: 1.25rem;
   height: 1.25rem;
-  transition: transform 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  stroke-width: 2;
 }
 
 .themeToggle:hover .icon {
-  transform: rotate(12deg);
+  transform: rotate(15deg) scale(1.1);
 }
 
-@media (max-width: 480px) {
+/* Placeholder for SSR */
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  background-color: hsl(var(--secondary) / 0.5);
+}
+
+.placeholderIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background-color: hsl(var(--muted-foreground) / 0.3);
+}
+
+/* Theme-specific styling */
+.themeToggle[data-theme="light"] {
+  color: hsl(45 100% 51%);
+}
+
+.themeToggle[data-theme="dark"] {
+  color: hsl(210 40% 70%);
+}
+
+.themeToggle[data-theme="system"] {
+  color: hsl(var(--primary));
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
   .themeToggle {
-    width: 2rem;
-    height: 2rem;
+    width: 2.25rem;
+    height: 2.25rem;
   }
 
   .icon {
     width: 1.125rem;
     height: 1.125rem;
   }
+}
+
+/* Animation for theme changes */
+@keyframes themeChange {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.themeToggle:active .icon {
+  animation: themeChange 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }

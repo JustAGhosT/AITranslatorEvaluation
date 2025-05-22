@@ -1,47 +1,31 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
-import { ThemeToggle } from "@/components/theme-toggle"
-import {
-  Bell,
-  Search,
-  Menu,
-  X,
-  ChevronDown,
-  User,
-  Settings,
-  HelpCircle,
-  LogOut,
-  FileText,
-  Code,
-  MessageCircle,
-} from "lucide-react"
+import { useState } from "react"
+import { Bell, ChevronDown, Menu, Search, User } from "lucide-react"
+import { ThemeToggle } from "@/src/components/theme-toggle"
 import styles from "./header.module.css"
 
-export function Header() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isResourcesOpen, setIsResourcesOpen] = useState(false)
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
-  const resourcesRef = useRef<HTMLDivElement>(null)
-  const userMenuRef = useRef<HTMLDivElement>(null)
-
-  // Close dropdowns when clicking outside
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (resourcesRef.current && !resourcesRef.current.contains(event.target as Node)) {
-        setIsResourcesOpen(false)
-      }
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
-        setIsUserMenuOpen(false)
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [])
+export function HeaderTestGuide() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [resourcesOpen, setResourcesOpen] = useState(false)
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
 
   return (
-    <>
+    <div className="space-y-8">
+      <div className="rounded-lg border p-4">
+        <h2 className="text-xl font-bold mb-4">Header Testing Guide</h2>
+        <p className="mb-2">Follow these steps to test all header elements:</p>
+        <ol className="list-decimal pl-5 space-y-2">
+          <li>Verify the logo appears and has proper styling</li>
+          <li>Check that the title and subtitle are visible and properly styled</li>
+          <li>Test the theme toggle button (switches between light/dark mode)</li>
+          <li>Click the notification bell icon</li>
+          <li>Test the Resources dropdown menu</li>
+          <li>Test the user profile dropdown menu</li>
+          <li>Resize the browser to mobile width (&lt;768px) to test mobile menu</li>
+        </ol>
+      </div>
+
       <header className={styles.header}>
         <div className={styles.container}>
           {/* Logo Section */}
@@ -70,27 +54,25 @@ export function Header() {
             </a>
 
             {/* Resources Dropdown */}
-            <div className={styles.dropdown} ref={resourcesRef}>
+            <div className={styles.dropdown}>
               <button
                 className={styles.dropdownTrigger}
-                onClick={() => setIsResourcesOpen(!isResourcesOpen)}
-                aria-expanded={isResourcesOpen}
+                onClick={() => setResourcesOpen(!resourcesOpen)}
+                aria-expanded={resourcesOpen}
               >
                 Resources
-                <ChevronDown className={`${styles.chevron} ${isResourcesOpen ? styles.chevronOpen : ""}`} />
+                <ChevronDown className={`${styles.chevron} ${resourcesOpen ? styles.chevronOpen : ""}`} />
               </button>
-              {isResourcesOpen && (
+
+              {resourcesOpen && (
                 <div className={styles.dropdownMenu}>
                   <a href="#" className={styles.dropdownItem}>
-                    <FileText size={16} />
                     Documentation
                   </a>
                   <a href="#" className={styles.dropdownItem}>
-                    <Code size={16} />
                     API Reference
                   </a>
                   <a href="#" className={styles.dropdownItem}>
-                    <MessageCircle size={16} />
                     Support
                   </a>
                 </div>
@@ -109,50 +91,46 @@ export function Header() {
               <span className={styles.notificationBadge}>3</span>
             </button>
 
-            {/* Theme Toggle Button */}
             <ThemeToggle />
 
             {/* User Menu */}
-            <div className={styles.userMenu} ref={userMenuRef}>
+            <div className={styles.userMenu}>
               <button
                 className={styles.userButton}
-                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                aria-expanded={isUserMenuOpen}
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                aria-expanded={userMenuOpen}
               >
                 <div className={styles.userAvatar}>
                   <User size={16} />
                 </div>
-                <span className={styles.userName}>John Doe</span>
-                <ChevronDown className={`${styles.chevron} ${isUserMenuOpen ? styles.chevronOpen : ""}`} />
+                <span className={styles.userName}>Admin</span>
               </button>
 
-              {isUserMenuOpen && (
+              {userMenuOpen && (
                 <div className={styles.userDropdown}>
                   <div className={styles.userInfo}>
                     <div className={styles.userAvatarLarge}>
                       <User size={20} />
                     </div>
                     <div>
-                      <div className={styles.userNameLarge}>John Doe</div>
-                      <div className={styles.userEmail}>john.doe@example.com</div>
+                      <div className={styles.userNameLarge}>Admin User</div>
+                      <div className={styles.userEmail}>admin@example.com</div>
                     </div>
                   </div>
+
                   <hr className={styles.divider} />
+
                   <a href="#" className={styles.dropdownItem}>
-                    <User size={16} />
                     Profile
                   </a>
                   <a href="#" className={styles.dropdownItem}>
-                    <Settings size={16} />
                     Settings
                   </a>
                   <a href="#" className={styles.dropdownItem}>
-                    <HelpCircle size={16} />
                     Help
                   </a>
                   <hr className={styles.divider} />
                   <a href="#" className={styles.dropdownItem}>
-                    <LogOut size={16} />
                     Sign out
                   </a>
                 </div>
@@ -162,35 +140,39 @@ export function Header() {
             {/* Mobile Menu Button */}
             <button
               className={styles.mobileMenuButton}
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-expanded={mobileMenuOpen}
               aria-label="Toggle mobile menu"
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              <Menu size={24} />
             </button>
           </div>
         </div>
-      </header>
 
-      {/* Mobile Navigation */}
-      {isMobileMenuOpen && (
-        <div className={styles.mobileNav}>
-          <div className={styles.mobileNavContent}>
-            <a href="#" className={`${styles.mobileNavLink} ${styles.active}`}>
-              Dashboard
-            </a>
-            <a href="#" className={styles.mobileNavLink}>
-              Reports
-            </a>
-            <a href="#" className={styles.mobileNavLink}>
-              Settings
-            </a>
+        {/* Mobile Navigation */}
+        {mobileMenuOpen && (
+          <div className={styles.mobileNav}>
+            <div className={styles.mobileNavContent}>
+              <a href="#" className={`${styles.mobileNavLink} ${styles.active}`}>
+                Dashboard
+              </a>
+              <a href="#" className={styles.mobileNavLink}>
+                Reports
+              </a>
+              <a href="#" className={styles.mobileNavLink}>
+                Settings
+              </a>
 
-            <div className={styles.mobileDropdown}>
-              <button className={styles.mobileDropdownTrigger} onClick={() => setIsResourcesOpen(!isResourcesOpen)}>
+              <button
+                className={styles.mobileDropdownTrigger}
+                onClick={() => setResourcesOpen(!resourcesOpen)}
+                aria-expanded={resourcesOpen}
+              >
                 Resources
-                <ChevronDown className={`${styles.chevron} ${isResourcesOpen ? styles.chevronOpen : ""}`} />
+                <ChevronDown className={resourcesOpen ? styles.chevronOpen : ""} />
               </button>
-              {isResourcesOpen && (
+
+              {resourcesOpen && (
                 <div className={styles.mobileDropdownMenu}>
                   <a href="#" className={styles.mobileDropdownItem}>
                     Documentation
@@ -204,15 +186,22 @@ export function Header() {
                 </div>
               )}
             </div>
-
-            {/* Mobile Theme Toggle */}
-            <div className={styles.mobileThemeToggle}>
-              <span>Theme:</span>
-              <ThemeToggle />
-            </div>
           </div>
-        </div>
-      )}
-    </>
+        )}
+      </header>
+
+      <div className="rounded-lg border p-4 mt-8">
+        <h3 className="text-lg font-semibold mb-2">Expected Behaviors</h3>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Logo should have a gradient background with a "T" in white</li>
+          <li>Theme toggle should switch between light and dark modes</li>
+          <li>Notification bell should show a red badge with "3"</li>
+          <li>Resources dropdown should open/close when clicked</li>
+          <li>User menu should show profile options when clicked</li>
+          <li>On mobile, the hamburger menu should reveal navigation options</li>
+          <li>All hover states should show subtle background changes</li>
+        </ul>
+      </div>
+    </div>
   )
 }
