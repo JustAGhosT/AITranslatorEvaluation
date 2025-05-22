@@ -1,0 +1,54 @@
+.cardContent {
+  padding: 1.5rem;
+}
+
+.providerSelector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.selectorLabel {
+  font-size: 0.875rem;
+  margin-right: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.providerButton {
+  text-transform: capitalize;
+}
+
+.chartContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.metricLabel {
+  text-transform: capitalize;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+}
+
+.legendColor {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+  margin-right: 0.25rem;
+}
+
+.legendText {
+  font-size: 0.875rem;
+  text-transform: capitalize;
+}

@@ -1,0 +1,65 @@
+.button {
+  position: relative;
+  overflow: hidden;
+  z-index: var(--z-index-base);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Remove default focus outline and replace with custom styles */
+.button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.button:focus-visible {
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.25) !important;
+}
+
+/* Active state animation - standardized scale value */
+.button:active {
+  transform: scale(0.97);
+}
+
+/* Ripple effect for click feedback - standardized timing */
+.button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+  pointer-events: none;
+}
+
+.button:active::after {
+  animation: ripple 0.5s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(100, 100);
+    opacity: 0;
+  }
+}
+
+/* Ensure content is above the ripple */
+.button > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Fix for iOS button styling */
+.button {
+  -webkit-appearance: none;
+  appearance: none;
+}

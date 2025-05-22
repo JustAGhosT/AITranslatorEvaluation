@@ -1,0 +1,64 @@
+/* Remove ALL default focus outlines and blue highlights */
+* {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Custom focus styles that maintain accessibility without blue outlines */
+:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.25) !important;
+  transition: box-shadow 0.2s ease;
+}
+
+/* Button and interactive element base styles */
+button,
+a[role="button"],
+.interactive-element {
+  position: relative;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent !important; /* Remove mobile tap highlight */
+  user-select: none; /* Prevent text selection */
+}
+
+/* Active state animations - standardized scale value */
+button:active,
+a[role="button"]:active,
+.interactive-element:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
+
+/* Ensure pointer events work correctly */
+button::before,
+a[role="button"]::before,
+.interactive-element::before {
+  pointer-events: none;
+}
+
+/* Fix for iOS button styling */
+button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Remove selection highlight */
+::selection {
+  background-color: rgba(var(--primary-rgb), 0.1);
+  color: inherit;
+}
+
+/* Fix for default browser focus rings */
+input:focus,
+textarea:focus,
+select:focus,
+a:focus,
+button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Fix for Firefox */
+::-moz-focus-inner {
+  border: 0;
+}

@@ -1,0 +1,67 @@
+/* Common animation variables */
+:root {
+  --hover-transition-duration: 0.3s;
+  --hover-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  --hover-bg-opacity-start: 0;
+  --hover-bg-opacity-end: 0.08;
+  --hover-scale-start: 1;
+  --hover-scale-end: 1.02;
+  --hover-shadow-start: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --hover-shadow-end: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Keyframes for background fade animation */
+@keyframes backgroundFadeIn {
+  from {
+    opacity: var(--hover-bg-opacity-start);
+  }
+  to {
+    opacity: var(--hover-bg-opacity-end);
+  }
+}
+
+/* Keyframes for subtle scale animation */
+@keyframes subtleScale {
+  from {
+    transform: scale(var(--hover-scale-start));
+  }
+  to {
+    transform: scale(var(--hover-scale-end));
+  }
+}
+
+/* Keyframes for shadow increase */
+@keyframes shadowIncrease {
+  from {
+    box-shadow: var(--hover-shadow-start);
+  }
+  to {
+    box-shadow: var(--hover-shadow-end);
+  }
+}
+
+/* Keyframes for border glow */
+@keyframes borderGlow {
+  from {
+    box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0);
+  }
+  to {
+    box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.25);
+  }
+}
+
+/* Keyframes for text emphasis */
+@keyframes textEmphasis {
+  from {
+    letter-spacing: 0;
+  }
+  to {
+    letter-spacing: 0.01em;
+  }
+}
+
+/* Dark mode adjustments */
+.dark {
+  --hover-bg-opacity-end: 0.15;
+  --hover-shadow-end: 0 10px 15px -3px rgba(0, 0, 0, 0.25), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+}

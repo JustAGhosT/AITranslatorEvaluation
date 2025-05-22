@@ -1,0 +1,21 @@
+.card {
+  position: relative;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card:focus {
+  outline: none;
+}
+
+.card:focus-visible {
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.5);
+}
+
+.cardHeader,
+.cardTitle,
+.cardDescription,
+.cardContent,
+.cardFooter {
+  position: relative;
+  z-index: 1;
+}

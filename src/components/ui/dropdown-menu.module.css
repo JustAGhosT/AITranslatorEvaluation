@@ -1,0 +1,72 @@
+.content,
+.subContent {
+  animation-duration: 0.2s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.item,
+.subTrigger,
+.checkboxItem,
+.radioItem {
+  position: relative;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent !important;
+  user-select: none;
+  transition: all 0.2s ease;
+  outline: none !important;
+}
+
+.item:focus,
+.subTrigger:focus,
+.checkboxItem:focus,
+.radioItem:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.item:focus-visible,
+.subTrigger:focus-visible,
+.checkboxItem:focus-visible,
+.radioItem:focus-visible {
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.25) !important;
+  outline: none !important;
+}
+
+.item:active,
+.subTrigger:active,
+.checkboxItem:active,
+.radioItem:active {
+  transform: scale(0.98);
+  background-color: rgba(var(--primary-rgb), 0.1);
+}
+
+.item::before,
+.subTrigger::before,
+.checkboxItem::before,
+.radioItem::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--primary);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.item:hover::before,
+.subTrigger:hover::before,
+.checkboxItem:hover::before,
+.radioItem:hover::before {
+  opacity: 0.05;
+}
+
+.label,
+.shortcut,
+.separator {
+  user-select: none;
+}

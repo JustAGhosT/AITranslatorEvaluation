@@ -1,0 +1,260 @@
+.container {
+  background-color: var(--card-bg, #ffffff);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.titleIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: #ffc107;
+  color: #ffffff;
+}
+
+.titleIcon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary, #000000);
+  margin: 0;
+}
+
+.badge {
+  background-color: #fff8e1;
+  color: #ffa000;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+}
+
+.tidbitsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.tidbitCard {
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  background-color: var(--card-bg, #ffffff);
+  color: var(--text-primary, #000000);
+}
+
+.tidbitCard:hover {
+  border-color: var(--primary-color, #3b82f6);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tidbitHeader {
+  display: flex;
+  align-items: flex-start;
+  padding: 1rem;
+  gap: 0.75rem;
+  position: relative;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.globeIcon {
+  background-color: rgba(33, 150, 243, 0.1);
+  color: #2196f3;
+}
+
+.medalIcon {
+  background-color: rgba(63, 81, 181, 0.1);
+  color: #3f51b5;
+}
+
+.shieldIcon {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
+}
+
+.dollarIcon {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: #ffc107;
+}
+
+.bookIcon {
+  background-color: rgba(156, 39, 176, 0.1);
+  color: #9c27b0;
+}
+
+.tidbitInfo {
+  flex: 1;
+}
+
+.tidbitTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary, #000000);
+  margin: 0 0 0.5rem 0;
+}
+
+.tidbitDescription {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #616161);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.chevron {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted, #9e9e9e);
+  transition: transform 0.2s ease;
+}
+
+.rotated {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.tidbitContent {
+  padding: 0 1rem 1rem 4.25rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.detailsList {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--text-secondary, #616161);
+  font-size: 0.875rem;
+}
+
+.detailsList li {
+  margin-bottom: 0.5rem;
+}
+
+.recommendation {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: rgba(76, 175, 80, 0.1);
+  border-radius: 0.25rem;
+  color: #2e7d32;
+  font-size: 0.875rem;
+}
+
+.dark .tidbitCard {
+  background-color: var(--card-bg, #1f2937);
+  border-color: var(--border-color, #374151);
+}
+
+.dark .tidbitTitle {
+  color: var(--text-primary, #f9fafb);
+}
+
+.dark .tidbitDescription {
+  color: var(--text-secondary, #e5e7eb);
+}
+
+.dark .chevron {
+  color: var(--text-muted, #9ca3af);
+}
+
+.dark .detailsList {
+  color: var(--text-secondary, #e5e7eb);
+}
+
+.dark .recommendation {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #81c784;
+}
+
+.dark .badge {
+  background-color: rgba(255, 160, 0, 0.2);
+  color: #ffb74d;
+}
+
+.dark .globeIcon {
+  background-color: rgba(33, 150, 243, 0.2);
+  color: #64b5f6;
+}
+
+.dark .medalIcon {
+  background-color: rgba(63, 81, 181, 0.2);
+  color: #7986cb;
+}
+
+.dark .shieldIcon {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #81c784;
+}
+
+.dark .dollarIcon {
+  background-color: rgba(255, 193, 7, 0.2);
+  color: #ffd54f;
+}
+
+.dark .bookIcon {
+  background-color: rgba(156, 39, 176, 0.2);
+  color: #ba68c8;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .tidbitsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .badge {
+    align-self: flex-start;
+  }
+}
