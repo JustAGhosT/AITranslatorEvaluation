@@ -1,13 +1,21 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Check, Code, Shield, Zap, Users } from "lucide-react"
 import { ErrorBoundary } from "@/src/components/ui/error-boundary"
+import { useTheme } from "next-themes"
 
 function IntegrationContent() {
-  console.log("Rendering Integration content")
+  const [mounted, setMounted] = useState(false)
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   const [selectedProvider, setSelectedProvider] = useState("microsoft")
   const [selectedLanguage, setSelectedLanguage] = useState("javascript")
 
@@ -49,36 +57,130 @@ function IntegrationContent() {
     },
   }
 
+  if (!mounted) {
+    return null
+  }
+
+  const cardStyle = {
+    backgroundColor: isDark ? "hsl(217, 33%, 17%)" : "white",
+    color: isDark ? "hsl(210, 40%, 98%)" : "hsl(222, 47%, 11%)",
+    borderColor: isDark ? "hsl(215, 27%, 25%)" : "hsl(214, 32%, 91%)",
+    transition: "background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease",
+  }
+
+  const titleStyle = {
+    color: isDark ? "hsl(210, 40%, 98%)" : "hsl(222, 47%, 11%)",
+    transition: "color 0.3s ease",
+  }
+
+  const badgeStyle = {
+    backgroundColor: isDark ? "hsl(215, 27%, 25%)" : "hsl(214, 32%, 91%)",
+    color: isDark ? "hsl(210, 40%, 98%)" : "hsl(222, 47%, 11%)",
+    transition: "background-color 0.3s ease, color 0.3s ease",
+  }
+
+  const checkIconStyle = {
+    color: "hsl(142, 76%, 36%)",
+  }
+
+  const mutedTextStyle = {
+    color: isDark ? "hsl(215, 20%, 65%)" : "hsl(215, 16%, 47%)",
+    transition: "color 0.3s ease",
+  }
+
+  const sectionTitleStyle = {
+    color: isDark ? "hsl(210, 40%, 98%)" : "hsl(222, 47%, 11%)",
+    transition: "color 0.3s ease",
+    fontSize: "1.5rem",
+    fontWeight: "bold",
+    display: "flex",
+    alignItems: "center",
+    gap: "0.5rem",
+    marginBottom: "1.5rem",
+  }
+
+  const zapIconStyle = {
+    color: isDark ? "hsl(217, 91%, 60%)" : "hsl(221, 83%, 53%)",
+    transition: "color 0.3s ease",
+  }
+
+  const gridStyle = {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+    gap: "1.5rem",
+    marginBottom: "2rem",
+  }
+
+  const selectedCardStyle = {
+    ...cardStyle,
+    borderWidth: "2px",
+    borderColor: isDark ? "hsl(217, 91%, 60%)" : "hsl(221, 83%, 53%)",
+  }
+
+  const codeBlockStyle = {
+    backgroundColor: isDark ? "hsl(222, 47%, 11%)" : "hsl(214, 32%, 91%)",
+    color: isDark ? "hsl(210, 40%, 98%)" : "hsl(222, 47%, 11%)",
+    padding: "1rem",
+    borderRadius: "0.375rem",
+    overflow: "auto",
+    transition: "background-color 0.3s ease, color 0.3s ease",
+    fontFamily: "monospace",
+    fontSize: "0.875rem",
+    lineHeight: "1.5",
+  }
+
+  const blueContainerStyle = {
+    backgroundColor: isDark ? "hsl(222, 47%, 11%)" : "hsl(214, 100%, 97%)",
+    borderColor: isDark ? "hsl(217, 33%, 17%)" : "hsl(214, 100%, 91%)",
+    borderWidth: "1px",
+    borderStyle: "solid",
+    borderRadius: "0.75rem",
+    padding: "1.5rem",
+    marginTop: "2rem",
+    transition: "background-color 0.3s ease, border-color 0.3s ease",
+  }
+
+  const blueTitleStyle = {
+    color: isDark ? "hsl(217, 91%, 60%)" : "hsl(221, 83%, 53%)",
+    transition: "color 0.3s ease",
+    fontSize: "1.25rem",
+    fontWeight: "bold",
+    marginBottom: "1.5rem",
+    display: "flex",
+    alignItems: "center",
+    gap: "0.5rem",
+  }
+
   return (
-    <div className="space-y-8">
-      <h2 className="text-2xl font-bold flex items-center gap-2">
-        <Zap className="h-6 w-6 text-primary" />
+    <div style={{ padding: "1rem" }}>
+      <h2 style={sectionTitleStyle}>
+        <Zap style={zapIconStyle} size={24} />
         Integration Guide
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card>
+      <div style={gridStyle}>
+        <Card style={cardStyle}>
           <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2">
-              <Code className="h-5 w-5" />
+            <CardTitle style={titleStyle} className="flex items-center gap-2">
+              <Code size={20} style={{ color: isDark ? "hsl(217, 91%, 60%)" : "hsl(221, 83%, 53%)" }} />
               API & SDKs
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-green-500" />
+                <Check size={16} style={checkIconStyle} />
                 <span>REST API Support</span>
               </div>
               <div className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-green-500" />
+                <Check size={16} style={checkIconStyle} />
                 <span>WebSocket Support</span>
               </div>
               <div className="mt-4">
                 <p className="text-sm font-medium mb-2">SDK Options:</p>
                 <div className="flex flex-wrap gap-2">
                   {data.api.sdkOptions.map((sdk) => (
-                    <Badge key={sdk} variant="secondary">
+                    <Badge key={sdk} variant="outline" style={badgeStyle}>
                       {sdk}
                     </Badge>
                   ))}
@@ -86,44 +188,46 @@ function IntegrationContent() {
               </div>
               <div className="mt-4">
                 <p className="text-sm font-medium mb-1">Documentation:</p>
-                <p className="text-sm text-muted-foreground">{data.api.documentation}</p>
+                <p className="text-sm" style={mutedTextStyle}>
+                  {data.api.documentation}
+                </p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card style={cardStyle}>
           <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2">
-              <Shield className="h-5 w-5" />
+            <CardTitle style={titleStyle} className="flex items-center gap-2">
+              <Shield size={20} style={{ color: isDark ? "hsl(217, 91%, 60%)" : "hsl(221, 83%, 53%)" }} />
               Security
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-green-500" />
+                <Check size={16} style={checkIconStyle} />
                 <span>End-to-End Encryption</span>
               </div>
               <div className="mt-4">
                 <p className="text-sm font-medium mb-2">Data Residency Leaders:</p>
                 <div className="flex flex-wrap gap-2">
                   {data.security.dataResidency.map((provider) => (
-                    <Badge key={provider} variant="secondary">
+                    <Badge key={provider} variant="outline" style={badgeStyle}>
                       {provider}
                     </Badge>
                   ))}
                 </div>
               </div>
               <div className="flex items-center gap-2 mt-4">
-                <Check className="h-4 w-4 text-green-500" />
+                <Check size={16} style={checkIconStyle} />
                 <span>GDPR Compliance</span>
               </div>
               <div className="mt-4">
                 <p className="text-sm font-medium mb-2">ISO Certifications:</p>
                 <div className="flex flex-wrap gap-2">
                   {data.security.isoCertifications.map((provider) => (
-                    <Badge key={provider} variant="secondary">
+                    <Badge key={provider} variant="outline" style={badgeStyle}>
                       {provider}
                     </Badge>
                   ))}
@@ -135,23 +239,41 @@ function IntegrationContent() {
       </div>
 
       <div className="mt-12">
-        <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-          <Users className="h-5 w-5 text-primary" />
+        <h3
+          style={{
+            ...titleStyle,
+            fontSize: "1.25rem",
+            fontWeight: "bold",
+            marginBottom: "1.5rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+          }}
+        >
+          <Users size={20} style={{ color: isDark ? "hsl(217, 91%, 60%)" : "hsl(221, 83%, 53%)" }} />
           Provider-Specific Integration Details
         </h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+            gap: "1rem",
+            marginBottom: "2rem",
+          }}
+        >
           {Object.entries(data.teamsIntegration).map(([provider, details]) => (
             <Card
               key={provider}
-              className={`cursor-pointer transition-all duration-300 hover:shadow-md ${
-                selectedProvider === provider ? "ring-2 ring-primary" : ""
-              }`}
+              style={selectedProvider === provider ? selectedCardStyle : cardStyle}
+              className="cursor-pointer transition-all duration-300 hover:shadow-md"
               onClick={() => setSelectedProvider(provider)}
             >
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg capitalize">{provider}</CardTitle>
-                <CardDescription>
+                <CardTitle style={titleStyle} className="text-lg capitalize">
+                  {provider}
+                </CardTitle>
+                <CardDescription style={mutedTextStyle}>
                   API Complexity: <span className="font-medium">{details.setupComplexity}</span>
                 </CardDescription>
               </CardHeader>
@@ -174,18 +296,24 @@ function IntegrationContent() {
                           .map((_, i) => (
                             <div
                               key={i}
-                              className={`w-2 h-2 rounded-full mr-1 ${
-                                i < (provider === "microsoft" || provider === "azure" ? 5 : 4)
-                                  ? "bg-green-500"
-                                  : "bg-gray-300"
-                              }`}
+                              className={`w-2 h-2 rounded-full mr-1`}
+                              style={{
+                                backgroundColor:
+                                  i < (provider === "microsoft" || provider === "azure" ? 5 : 4)
+                                    ? "hsl(142, 76%, 36%)"
+                                    : isDark
+                                      ? "hsl(215, 27%, 25%)"
+                                      : "hsl(214, 32%, 91%)",
+                              }}
                             />
                           ))}
                       </div>
                     </div>
                   </>
                 ) : (
-                  <p className="text-sm text-muted-foreground italic">Teams integration not supported</p>
+                  <p className="text-sm italic" style={mutedTextStyle}>
+                    Teams integration not supported
+                  </p>
                 )}
               </CardContent>
             </Card>
@@ -193,10 +321,8 @@ function IntegrationContent() {
         </div>
       </div>
 
-      <div className="mt-12 bg-blue-50 dark:bg-blue-950 p-6 rounded-xl border border-blue-100 dark:border-blue-900">
-        <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-blue-700 dark:text-blue-300">
-          Sample Integration Code
-        </h3>
+      <div style={blueContainerStyle}>
+        <h3 style={blueTitleStyle}>Sample Integration Code</h3>
 
         <div className="flex space-x-2 mb-4">
           {["javascript", "python", "csharp"].map((language) => (
@@ -204,6 +330,11 @@ function IntegrationContent() {
               key={language}
               variant={selectedLanguage === language ? "default" : "outline"}
               className="cursor-pointer"
+              style={
+                selectedLanguage === language
+                  ? { backgroundColor: isDark ? "hsl(217, 91%, 60%)" : "hsl(221, 83%, 53%)", color: "white" }
+                  : badgeStyle
+              }
               onClick={() => setSelectedLanguage(language)}
             >
               {language === "javascript" ? "JavaScript" : language === "python" ? "Python" : "C#"}
@@ -211,8 +342,8 @@ function IntegrationContent() {
           ))}
         </div>
 
-        <div className="bg-gray-900 text-gray-100 p-4 rounded-md overflow-x-auto">
-          <pre className="text-sm">
+        <div style={codeBlockStyle}>
+          <pre>
             <code>
               {selectedLanguage === "javascript"
                 ? `// JavaScript code sample for Teams integration

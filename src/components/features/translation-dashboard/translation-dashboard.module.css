@@ -2,8 +2,8 @@
 
 .container {
   min-height: 100vh;
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -29,18 +29,21 @@
 }
 
 .compareButton {
-  background-color: var(--primary);
-  color: var(--primary-foreground);
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
   border: none;
-  border-radius: var(--radius);
+  border-radius: calc(var(--radius) - 2px);
   padding: 0.75rem 1.5rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .compareButton:hover {
-  background-color: var(--primary-hover);
+  background-color: hsl(var(--primary) / 0.9);
 }
 
 .loadingContainer,
@@ -52,14 +55,15 @@
   min-height: 50vh;
   padding: 2rem;
   text-align: center;
-  background-color: var(--card);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
+  background-color: hsl(var(--card));
+  border-radius: calc(var(--radius) - 2px);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .loadingSpinner {
-  border: 4px solid var(--secondary);
-  border-top: 4px solid var(--primary);
+  border: 4px solid hsl(var(--secondary));
+  border-top: 4px solid hsl(var(--primary));
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -70,22 +74,22 @@
 .errorIcon {
   font-size: 3rem;
   margin-bottom: 1rem;
-  color: var(--destructive);
+  color: hsl(var(--destructive));
 }
 
 .retryButton {
   margin-top: 1rem;
-  background-color: var(--primary);
-  color: var(--primary-foreground);
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
   border: none;
-  border-radius: var(--radius);
+  border-radius: calc(var(--radius) - 2px);
   padding: 0.5rem 1rem;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .retryButton:hover {
-  background-color: var(--primary-hover);
+  background-color: hsl(var(--primary) / 0.9);
 }
 
 @keyframes spin {
@@ -115,9 +119,11 @@
 
 /* Add theme-transition class to elements that should transition smoothly */
 .card {
-  @apply theme-transition;
+  transition:
+    color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, text-decoration-color 0.2s ease, fill 0.2s ease, stroke 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, filter 0.2s ease, backdrop-filter 0.2s ease;
 }
 
 .button {
-  @apply theme-transition;
+  transition:
+    color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, text-decoration-color 0.2s ease, fill 0.2s ease, stroke 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, filter 0.2s ease, backdrop-filter 0.2s ease;
 }
