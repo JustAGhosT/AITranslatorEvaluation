@@ -20,17 +20,26 @@ export function ThemeToggle() {
 
   // Determine which icon to show based on the current theme
   const currentTheme = theme === "system" ? resolvedTheme : theme
+  const isDark = currentTheme === "dark"
+
+  const handleToggle = () => {
+    setTheme(isDark ? "light" : "dark")
+  }
 
   return (
     <button
       className={styles.themeToggle}
-      onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
-      aria-label={currentTheme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-      title={currentTheme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+      onClick={handleToggle}
+      aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+      title={isDark ? "Switch to light theme" : "Switch to dark theme"}
       type="button"
     >
-      {currentTheme === "dark" ? <Sun className={styles.icon} /> : <Moon className={styles.icon} />}
-      <span className="sr-only">{currentTheme === "dark" ? "Light mode" : "Dark mode"}</span>
+      {isDark ? (
+        <Sun className={`${styles.icon} ${styles.sunIcon}`} />
+      ) : (
+        <Moon className={`${styles.icon} ${styles.moonIcon}`} />
+      )}
+      <span className="sr-only">{isDark ? "Light mode" : "Dark mode"}</span>
     </button>
   )
 }

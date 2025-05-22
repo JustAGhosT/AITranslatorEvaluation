@@ -1,15 +1,16 @@
-import { Loader2 } from "lucide-react"
-import styles from "../tabs/overview/overview.module.css"
+import { LoadingSpinner } from "@/src/components/ui/loading-spinner"
+import styles from "./loading-state.module.css"
 
 interface LoadingStateProps {
   message?: string
+  fullWidth?: boolean
+  size?: "small" | "medium" | "large"
 }
 
-export function LoadingState({ message = "Loading..." }: LoadingStateProps) {
+export function LoadingState({ message = "Loading data...", fullWidth = false, size = "medium" }: LoadingStateProps) {
   return (
-    <div className={styles.loadingContainer}>
-      <Loader2 className={styles.loadingSpinner} />
-      <p>{message}</p>
+    <div className={`${styles.container} ${fullWidth ? styles.fullWidth : ""}`}>
+      <LoadingSpinner message={message} size={size} />
     </div>
   )
 }
