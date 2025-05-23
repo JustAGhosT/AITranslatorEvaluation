@@ -1,6 +1,6 @@
 .footer {
-  background-color: hsl(var(--background));
-  border-top: 1px solid hsl(var(--border));
+  background-color: var(--background, hsl(var(--background)));
+  border-top: 1px solid var(--border-color, hsl(var(--border)));
   padding: 3rem 2rem 1.5rem;
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
@@ -21,14 +21,14 @@
 .footerTitle {
   font-size: 1.25rem;
   font-weight: 700;
-  color: hsl(var(--text-primary));
+  color: var(--text-color, hsl(var(--text-primary)));
   margin: 0 0 1rem;
   transition: color 0.3s ease;
 }
 
 .footerDescription {
   font-size: 0.875rem;
-  color: hsl(var(--text-secondary));
+  color: var(--text-color-secondary, hsl(var(--text-secondary)));
   margin: 0;
   line-height: 1.5;
   transition: color 0.3s ease;
@@ -37,7 +37,7 @@
 .footerHeading {
   font-size: 1rem;
   font-weight: 600;
-  color: hsl(var(--text-primary));
+  color: var(--text-color, hsl(var(--text-primary)));
   margin: 0 0 1rem;
   transition: color 0.3s ease;
 }
@@ -53,13 +53,13 @@
 
 .footerLink {
   font-size: 0.875rem;
-  color: hsl(var(--text-secondary));
+  color: var(--text-color-secondary, hsl(var(--text-secondary)));
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .footerLink:hover {
-  color: hsl(var(--primary));
+  color: var(--color-primary, hsl(var(--primary)));
 }
 
 .socialLinks {
@@ -75,25 +75,25 @@
   width: 2rem;
   height: 2rem;
   border-radius: 9999px;
-  background-color: hsl(var(--secondary));
-  color: hsl(var(--secondary-foreground));
+  background-color: var(--card-background-secondary, hsl(var(--secondary)));
+  color: var(--text-color, hsl(var(--secondary-foreground)));
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .socialLink:hover {
-  background-color: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
+  background-color: var(--color-primary, hsl(var(--primary)));
+  color: var(--text-color-inverse, hsl(var(--primary-foreground)));
 }
 
 .footerContact {
   font-size: 0.875rem;
-  color: hsl(var(--text-secondary));
+  color: var(--text-color-secondary, hsl(var(--text-secondary)));
   margin: 0;
   transition: color 0.3s ease;
 }
 
 .footerContactLink {
-  color: hsl(var(--primary));
+  color: var(--color-primary, hsl(var(--primary)));
   text-decoration: none;
 }
 
@@ -107,7 +107,7 @@
   align-items: center;
   padding-top: 1.5rem;
   margin-top: 2rem;
-  border-top: 1px solid hsl(var(--border));
+  border-top: 1px solid var(--border-color, hsl(var(--border)));
   max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
@@ -116,7 +116,7 @@
 
 .copyright {
   font-size: 0.75rem;
-  color: hsl(var(--text-secondary));
+  color: var(--text-color-secondary, hsl(var(--text-secondary)));
   margin: 0;
   transition: color 0.3s ease;
 }
@@ -128,13 +128,13 @@
 
 .footerBottomLink {
   font-size: 0.75rem;
-  color: hsl(var(--text-secondary));
+  color: var(--text-color-secondary, hsl(var(--text-secondary)));
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .footerBottomLink:hover {
-  color: hsl(var(--primary));
+  color: var(--color-primary, hsl(var(--primary)));
 }
 
 @media (max-width: 1024px) {

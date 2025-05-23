@@ -1,93 +1,80 @@
 "use client"
 
-import { useState } from "react"
+import type React from "react"
+
+import { useState, useEffect } from "react"
+import { Header } from "./header"
+import { Footer } from "./footer"
 import { NavTabs } from "./nav-tabs"
 import { Overview } from "./tabs/overview"
 import { Metrics } from "./tabs/metrics"
 import { Performance } from "./tabs/performance"
 import { Comparison } from "./tabs/comparison"
 import { Integration } from "./tabs/integration"
-import { Header } from "./header"
-import { Footer } from "./footer"
-import { ErrorBoundary } from "@/src/components/error-boundary"
+import { ExecutiveSummary } from "./executive-summary"
 import { InterestingTidbits } from "./interesting-tidbits"
 import { Recommendations } from "./recommendations"
-import { ProviderComparisonModal } from "./provider-comparison-modal"
-import { ExecutiveSummary } from "./executive-summary"
-import { useTranslation } from "@/src/contexts/translation-context"
-import { Button } from "@/components/ui/button"
-import { BarChart3 } from "lucide-react"
-import styles from "./translation-dashboard.module.css"
+import { useTheme } from "next-themes"
 
 type TabType = "overview" | "metrics" | "performance" | "comparison" | "integration"
 
 export default function TranslationDashboard() {
-  const { data, isLoading, error, refreshData } = useTranslation()
   const [activeTab, setActiveTab] = useState<TabType>("overview")
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
 
-  if (isLoading) {
-    return (
-      <div className={`${styles.loadingContainer} dashboard-container`}>
-        <div className={styles.loadingSpinner}></div>
-        <p>Loading translation data...</p>
-      </div>
-    )
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return null
   }
 
-  if (error || !data) {
-    return (
-      <div className={`${styles.errorContainer} dashboard-container`}>
-        <div className={styles.errorIcon}>⚠️</div>
-        <h3>Something went wrong</h3>
-        <p>{error?.message || "Could not load translation data. Please try again later."}</p>
-        <button className={styles.retryButton} onClick={refreshData}>
-          Retry
-        </button>
-      </div>
-    )
+  const containerStyle: React.CSSProperties = {
+    minHeight: "100vh",
+    backgroundColor: isDark ? "#111827" : "#f9fafb",
+    color: isDark ? "#f9fafb" : "#111827",
+    transition: "background-color 0.3s ease, color 0.3s ease",
+  }
+
+  const mainStyle: React.CSSProperties = {
+    maxWidth: "1280px",
+    margin: "0 auto",
+    padding: "2rem 1.5rem",
+    paddingTop: "1.5rem", // Adjusted for fixed header
+  }
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "overview":
+        return <Overview />
+      case "metrics":
+        return <Metrics />
+      case "performance":
+        return <Performance />
+      case "comparison":
+        return <Comparison />
+      case "integration":
+        return <Integration />
+      default:
+        return <Overview />
+    }
   }
 
   return (
-    <div className={`${styles.container} dashboard-container`}>
+    <div style={containerStyle}>
       <Header />
-
-      <main className={styles.main}>
-        {/* Executive Summary with metrics data */}
-        <ExecutiveSummary data={data} />
-
-        {/* Navigation Tabs */}
+      <main style={mainStyle}>
+        <ExecutiveSummary />
         <NavTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-
-        {/* Tab Content */}
-        <div className={styles.tabContent}>
-          <ErrorBoundary fallback={<div>Something went wrong with this tab. Please try again later.</div>}>
-            {activeTab === "overview" && <Overview />}
-            {activeTab === "metrics" && <Metrics data={data.metrics} />}
-            {activeTab === "performance" && <Performance />}
-            {activeTab === "comparison" && <Comparison />}
-            {activeTab === "integration" && <Integration />}
-          </ErrorBoundary>
+        {renderTabContent()}
+        <div style={{ marginTop: "2rem" }}>
+          <InterestingTidbits />
+          <Recommendations />
         </div>
-
-        {/* Provider Comparison Button - Improved Styling */}
-        <div className={styles.providerComparisonSection}>
-          <Button onClick={() => setIsModalOpen(true)} className="px-6 py-2 text-base" size="lg">
-            <BarChart3 className="mr-2 h-5 w-5" />
-            Compare All Providers
-          </Button>
-        </div>
-
-        {/* Recommendations Section */}
-        {data?.recommendations && <Recommendations data={data.recommendations} />}
-
-        {/* Interesting Tidbits */}
-        <InterestingTidbits />
-
-        {/* Provider Comparison Modal */}
-        {isModalOpen && <ProviderComparisonModal onClose={() => setIsModalOpen(false)} />}
       </main>
-
       <Footer />
     </div>
   )

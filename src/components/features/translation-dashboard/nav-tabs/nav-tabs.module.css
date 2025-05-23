@@ -3,16 +3,12 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   padding: 0.75rem;
-  background-color: hsl(var(--card));
-  border: 1px solid hsl(var(--border));
+  background-color: var(--card-background, #ffffff);
+  border: 1px solid var(--border-color, #e5e7eb);
   border-radius: 0.75rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   margin-bottom: 1.5rem;
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.containerDark {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .tab {
@@ -22,7 +18,7 @@
   padding: 0.625rem 1rem;
   border-radius: 0.5rem;
   background-color: transparent;
-  color: hsl(var(--foreground));
+  color: var(--text-color, #111827);
   font-size: 0.875rem;
   font-weight: 500;
   border: none;
@@ -40,17 +36,42 @@
 }
 
 .tab:hover {
-  background-color: hsl(var(--secondary));
-  color: hsl(var(--secondary-foreground));
+  background-color: var(--tab-hover-background, #f3f4f6);
 }
 
 .tab.active {
-  background-color: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
+  background-color: var(--color-primary, #3b82f6);
+  color: var(--text-color-inverse, #ffffff);
 }
 
 .tab svg {
   flex-shrink: 0;
+}
+
+.tabsPlaceholder {
+  height: 3.5rem;
+  background-color: var(--card-background, #ffffff);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+  background-image: linear-gradient(
+    to right,
+    var(--placeholder-color, #e5e7eb) 30%,
+    var(--placeholder-color-light, #f3f4f6) 50%,
+    var(--placeholder-color, #e5e7eb) 70%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 @media (max-width: 640px) {
@@ -72,4 +93,36 @@
   .tab {
     flex: 1;
   }
+}
+
+/* Dark mode styles */
+.dark .container {
+  background-color: var(--card-background-dark, #1f2937);
+  border-color: var(--border-color-dark, #374151);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.dark .tab {
+  color: var(--text-color-dark, #f9fafb);
+}
+
+.dark .tab:hover {
+  background-color: var(--tab-hover-background-dark, #111827);
+}
+
+.dark .tab.active {
+  background-color: var(--color-primary-dark, #60a5fa);
+  color: var(--text-color-inverse-dark, #111827);
+}
+
+.dark .tabsPlaceholder {
+  background-color: var(--card-background-dark, #1f2937);
+  border-color: var(--border-color-dark, #374151);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  background-image: linear-gradient(
+    to right,
+    var(--placeholder-color-dark, #374151) 30%,
+    var(--placeholder-color-light-dark, #1f2937) 50%,
+    var(--placeholder-color-dark, #374151) 70%
+  );
 }

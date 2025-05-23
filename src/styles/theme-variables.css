@@ -1,0 +1,53 @@
+:root {
+  /* Base colors */
+  --background: #f9fafb;
+  --card-background: #ffffff;
+  --card-background-secondary: #f3f4f6;
+  --text-color: #111827;
+  --text-color-secondary: #4b5563;
+  --text-color-tertiary: #6b7280;
+  --text-color-inverse: #ffffff;
+  --border-color: #e5e7eb;
+  --color-primary: #3b82f6;
+  --color-primary-light: #60a5fa;
+
+  /* Component specific */
+  --table-header-background: #f9fafb;
+  --table-header-hover: #f3f4f6;
+  --table-header-active: #e5e7eb;
+  --table-row-alternate: #f9fafb;
+  --table-row-hover: #f3f4f6;
+  --score-bar-background: #e5e7eb;
+  --tab-hover-background: #f3f4f6;
+
+  /* Placeholder colors */
+  --placeholder-color: #e5e7eb;
+  --placeholder-color-light: #f3f4f6;
+}
+
+.dark {
+  /* Base colors */
+  --background-dark: #111827;
+  --card-background-dark: #1f2937;
+  --card-background-secondary-dark: #111827;
+  --text-color-dark: #f9fafb;
+  --text-color-secondary-dark: #d1d5db;
+  --text-color-tertiary-dark: #9ca3af;
+  --text-color-inverse-dark: #111827;
+  --border-color-dark: #374151;
+  --color-primary-dark: #60a5fa;
+  --color-primary-light-dark: #93c5fd;
+
+  /* Component specific */
+  --table-header-background-dark: #111827;
+  --table-header-hover-dark: #1f2937;
+  --table-header-active-dark: #2d3748;
+  --table-row-alternate-dark: #1a1f2b;
+  --table-row-hover-dark: #1f2937;
+  --score-bar-background-dark: #374151;
+  --tab-hover-background-dark: #111827;
+
+  /* Placeholder colors */
+  --placeholder-color-dark: #374151;
+  --placeholder-color-light-dark: #1f2937;
+}

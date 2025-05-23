@@ -1,325 +1,148 @@
-.container {
+.summaryContainer {
   padding: 1.5rem;
-  background-color: hsl(var(--background));
-  border-radius: 0.75rem;
-  transition: background-color 0.3s ease;
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+  background-color: var(--card-background, #ffffff);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.header {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-@media (min-width: 768px) {
-  .header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-}
-
-.titleSection {
-  flex: 1;
-}
-
-.title {
-  font-size: 1.5rem;
+.summaryTitle {
+  font-size: 1.875rem;
   font-weight: 700;
-  color: hsl(var(--foreground));
   margin-bottom: 0.5rem;
-  line-height: 1.2;
+  color: var(--text-color, #111827);
 }
 
-.subtitle {
-  font-size: 0.875rem;
-  color: hsl(var(--muted-foreground));
-  max-width: 36rem;
-}
-
-.headerActions {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.badge {
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
-.statusBadge {
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-}
-
-.statusBadge::before {
-  content: "";
-  display: block;
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 9999px;
-  background-color: hsl(var(--primary));
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+.summaryDescription {
+  font-size: 1rem;
+  color: var(--text-color-secondary, #4b5563);
+  margin-bottom: 1.5rem;
 }
 
 .metricsGrid {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-@media (min-width: 640px) {
-  .metricsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .metricsGrid {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 
 .metricCard {
-  border-width: 1px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
-  overflow: hidden;
+  padding: 1.25rem;
+  border-radius: 0.375rem;
+  background-color: var(--card-background-secondary, #f9fafb);
+  border: 1px solid var(--border-color, #e5e7eb);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .metricCard:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
-.cardHeader {
-  padding: 1.25rem 1.25rem 0.75rem;
-}
-
-.iconContainer {
+.metricHeader {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1rem;
-}
-
-.iconWrapper {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 0.75rem;
-  transition: background-color 0.3s ease;
+  margin-bottom: 0.75rem;
 }
 
-.icon {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-.trendContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.25rem;
-}
-
-.trendBadge {
-  font-size: 0.75rem;
+.metricTitle {
+  font-size: 0.875rem;
   font-weight: 600;
-  padding: 0.25rem 0.5rem;
+  color: var(--text-color-secondary, #4b5563);
 }
 
-.trendemerald {
+.metricChange {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.125rem 0.375rem;
+  border-radius: 9999px;
+}
+
+.trendUp {
   background-color: rgba(16, 185, 129, 0.1);
-  color: hsl(var(--emerald));
+  color: #10b981;
 }
 
-.trendblue {
-  background-color: rgba(59, 130, 246, 0.1);
-  color: hsl(var(--blue));
+.trendDown {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
 }
 
-.trendpurple {
-  background-color: rgba(139, 92, 246, 0.1);
-  color: hsl(var(--purple));
+.trendNeutral {
+  background-color: rgba(107, 114, 128, 0.1);
+  color: #6b7280;
 }
 
-.trendorange {
-  background-color: rgba(249, 115, 22, 0.1);
-  color: hsl(var(--orange));
-}
-
-.trendrose {
-  background-color: rgba(244, 63, 94, 0.1);
-  color: hsl(var(--rose));
-}
-
-.trendcyan {
-  background-color: rgba(6, 182, 212, 0.1);
-  color: hsl(var(--cyan));
-}
-
-.trendLabel {
-  font-size: 0.75rem;
-  color: hsl(var(--muted-foreground));
-}
-
-.cardTitle {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: hsl(var(--foreground));
-}
-
-.cardContent {
-  padding: 0.75rem 1.25rem 1.25rem;
-}
-
-.valueSection {
-  margin-bottom: 1rem;
-}
-
-.value {
-  display: block;
-  font-size: 1.875rem;
+.metricValue {
+  font-size: 1.5rem;
   font-weight: 700;
-  color: hsl(var(--foreground));
-  margin-bottom: 0.25rem;
-  line-height: 1.2;
-}
-
-.description {
-  font-size: 0.75rem;
-  color: hsl(var(--muted-foreground));
-}
-
-.progressContainer {
-  width: 100%;
-}
-
-.progressBar {
-  width: 100%;
-  height: 0.5rem;
-  background-color: hsl(var(--secondary));
-  border-radius: 9999px;
-  overflow: hidden;
   margin-bottom: 0.5rem;
+  color: var(--text-color, #111827);
 }
 
-.progress {
-  height: 100%;
-  border-radius: 9999px;
-}
-
-.progressemerald {
-  background-color: hsl(var(--emerald));
-}
-
-.progressblue {
-  background-color: hsl(var(--blue));
-}
-
-.progresspurple {
-  background-color: hsl(var(--purple));
-}
-
-.progressorange {
-  background-color: hsl(var(--orange));
-}
-
-.progressrose {
-  background-color: hsl(var(--rose));
-}
-
-.progresscyan {
-  background-color: hsl(var(--cyan));
-}
-
-.progressLabels {
-  display: flex;
-  justify-content: space-between;
+.metricDescription {
   font-size: 0.75rem;
-  color: hsl(var(--muted-foreground));
+  color: var(--text-color-tertiary, #6b7280);
+  line-height: 1.25;
 }
 
-.insights {
-  margin-top: 2rem;
+/* Dark mode styles */
+.dark .summaryContainer {
+  background-color: var(--card-background-dark, #1f2937);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-.insightsCard {
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
+.dark .summaryTitle {
+  color: var(--text-color-dark, #f9fafb);
 }
 
-.insightsTitle {
-  font-size: 1rem;
-  font-weight: 600;
-  color: hsl(var(--foreground));
+.dark .summaryDescription {
+  color: var(--text-color-secondary-dark, #d1d5db);
 }
 
-.insightsList {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.dark .metricCard {
+  background-color: var(--card-background-secondary-dark, #111827);
+  border-color: var(--border-color-dark, #374151);
 }
 
-.insight {
-  display: flex;
-  gap: 0.75rem;
+.dark .metricTitle {
+  color: var(--text-color-secondary-dark, #d1d5db);
 }
 
-.insightIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 9999px;
-  background-color: hsl(var(--secondary));
-  flex-shrink: 0;
+.dark .metricValue {
+  color: var(--text-color-dark, #f9fafb);
 }
 
-.insightText {
-  font-size: 0.875rem;
-  color: hsl(var(--foreground));
-  line-height: 1.5;
+.dark .metricDescription {
+  color: var(--text-color-tertiary-dark, #9ca3af);
 }
 
-/* Animation for pulse effect */
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
+.dark .trendUp {
+  background-color: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+}
+
+.dark .trendDown {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+
+.dark .trendNeutral {
+  background-color: rgba(107, 114, 128, 0.2);
+  color: #9ca3af;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .metricsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
   }
-  50% {
-    opacity: 0.5;
+
+  .summaryTitle {
+    font-size: 1.5rem;
   }
-}
 
-/* Card-specific styles for visual variety */
-.card1 {
-  animation-delay: 0.1s;
-}
-
-.card2 {
-  animation-delay: 0.2s;
-}
-
-.card3 {
-  animation-delay: 0.3s;
-}
-
-.card4 {
-  animation-delay: 0.4s;
-}
-
-.card5 {
-  animation-delay: 0.5s;
-}
-
-.card6 {
-  animation-delay: 0.6s;
+  .metricValue {
+    font-size: 1.25rem;
+  }
 }

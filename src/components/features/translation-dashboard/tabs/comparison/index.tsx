@@ -1,180 +1,307 @@
 "use client"
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Check, GitCompare } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { ErrorBoundary } from "@/src/components/ui/error-boundary"
+import type React from "react"
+import { useState, useEffect } from "react"
+import { GitCompare, TrendingUp, TrendingDown } from "lucide-react"
+import { useTheme } from "next-themes"
 
-// Static data for comparison
-const tierData = {
-  "Basic Tier": {
-    startingPriceUsd: 199,
-    features: ["Up to 1 million characters/month", "Standard API access", "Email support", "Basic documentation"],
-  },
-  "Professional Tier": {
-    startingPriceUsd: 499,
-    features: [
-      "Up to 5 million characters/month",
-      "Advanced API access",
-      "Priority email support",
-      "Comprehensive documentation",
-      "Custom terminology management",
-    ],
-  },
-  "Enterprise Tier": {
-    startingPriceUsd: 999,
-    features: [
-      "Unlimited characters/month",
-      "Full API access",
-      "24/7 dedicated support",
-      "Custom integration assistance",
-      "Advanced terminology management",
-      "SLA guarantees",
-    ],
-  },
+interface ServiceComparison {
+  provider: string
+  accuracy: number
+  speed: number
+  cost: number
+  languages: number
+  apiFeatures: number
+  documentation: number
 }
 
-const providerSpecificPricing = {
-  google: {
-    enterprise: "$599/mo",
-    business: "$249/mo",
-    unique: "Pay-as-you-go options available",
-    strength: "Best API documentation",
-    weakness: "Premium support costs extra",
+const serviceComparisonData: ServiceComparison[] = [
+  {
+    provider: "Google Translate",
+    accuracy: 85,
+    speed: 90,
+    cost: 75,
+    languages: 95,
+    apiFeatures: 80,
+    documentation: 85,
   },
-  deepl: {
-    enterprise: "$499/mo",
-    business: "$199/mo",
-    unique: "Custom terminology management",
-    strength: "Most accurate for technical content",
-    weakness: "Limited language pairs compared to others",
+  {
+    provider: "DeepL",
+    accuracy: 92,
+    speed: 85,
+    cost: 65,
+    languages: 70,
+    apiFeatures: 75,
+    documentation: 80,
   },
-  azure: {
-    enterprise: "$549/mo",
-    business: "$219/mo",
-    unique: "Microsoft ecosystem integration",
-    strength: "Best compliance and security features",
-    weakness: "Complex pricing structure",
+  {
+    provider: "Microsoft Azure",
+    accuracy: 83,
+    speed: 88,
+    cost: 80,
+    languages: 85,
+    apiFeatures: 90,
+    documentation: 90,
   },
-  amazon: {
-    enterprise: "$449/mo",
-    business: "$179/mo",
-    unique: "AWS credits applicable",
-    strength: "Most cost-effective at scale",
-    weakness: "Less accurate for specialized content",
+  {
+    provider: "Amazon Translate",
+    accuracy: 80,
+    speed: 92,
+    cost: 85,
+    languages: 80,
+    apiFeatures: 85,
+    documentation: 75,
   },
-}
-
-function ComparisonContent() {
-  console.log("Rendering Comparison content")
-  const [hoveredProvider, setHoveredProvider] = useState<string | null>(null)
-
-  return (
-    <section className="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-xl shadow-sm animate-fadeIn">
-      <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-        <GitCompare className="h-6 w-6 text-primary" />
-        Service Comparison
-      </h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        {Object.entries(tierData).map(([tier, details]) => (
-          <Card key={tier}>
-            <CardHeader className="pb-2">
-              <CardTitle className="flex justify-between items-center">
-                <span>{tier}</span>
-                <span className="text-xl">${details.startingPriceUsd}/mo</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2">
-                {details.features.map((feature, index) => (
-                  <li key={index} className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      <h3 className="text-xl font-bold mb-4">Provider-Specific Pricing & Features</h3>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {Object.entries(providerSpecificPricing).map(([provider, details]) => (
-          <div
-            key={provider}
-            className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 transition-all duration-300 hover:shadow-md"
-            style={{
-              borderLeftColor: getProviderColor(provider),
-              borderLeftWidth: "4px",
-            }}
-            onMouseEnter={() => setHoveredProvider(provider)}
-            onMouseLeave={() => setHoveredProvider(null)}
-          >
-            <div className="flex justify-between items-center mb-3">
-              <h4 className="font-medium">{provider}</h4>
-              <div
-                className="w-3 h-3 rounded-full transition-all duration-300"
-                style={{
-                  backgroundColor: getProviderColor(provider),
-                  transform: hoveredProvider === provider ? "scale(1.5)" : "scale(1)",
-                }}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Enterprise:</span>
-                <span>{details.enterprise}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Business:</span>
-                <span>{details.business}</span>
-              </div>
-
-              <div className="mt-3">
-                <Badge className="mb-2" variant="outline">
-                  Unique Offering
-                </Badge>
-                <p className="text-sm">{details.unique}</p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 mt-3">
-                <div className="bg-green-50 dark:bg-green-900/20 p-2 rounded text-xs">
-                  <span className="block font-semibold text-green-600 dark:text-green-400 mb-1">Strength</span>
-                  {details.strength}
-                </div>
-                <div className="bg-red-50 dark:bg-red-900/20 p-2 rounded text-xs">
-                  <span className="block font-semibold text-red-600 dark:text-red-400 mb-1">Weakness</span>
-                  {details.weakness}
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-  )
-}
+]
 
 export function Comparison() {
-  return (
-    <ErrorBoundary>
-      <ComparisonContent />
-    </ErrorBoundary>
-  )
-}
+  const [sortField, setSortField] = useState<keyof ServiceComparison>("provider")
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc")
+  const [mounted, setMounted] = useState(false)
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
 
-function getProviderColor(provider: string): string {
-  const colors: Record<string, string> = {
-    google: "#4285F4",
-    deepl: "#5e72e4",
-    azure: "#0078D4",
-    amazon: "#FF9900",
-    microsoft: "#00a4ef",
+  useEffect(() => {
+    setMounted(true)
+    return () => setMounted(false)
+  }, [])
+
+  const handleSort = (field: keyof ServiceComparison) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc")
+    } else {
+      setSortField(field)
+      setSortDirection("asc")
+    }
   }
-  return colors[provider.toLowerCase()] || "#888888"
+
+  const sortedData = [...serviceComparisonData].sort((a, b) => {
+    if (sortField === "provider") {
+      return sortDirection === "asc"
+        ? a[sortField].localeCompare(b[sortField])
+        : b[sortField].localeCompare(a[sortField])
+    } else {
+      return sortDirection === "asc"
+        ? (a[sortField] as number) - (b[sortField] as number)
+        : (b[sortField] as number) - (a[sortField] as number)
+    }
+  })
+
+  if (!mounted) {
+    return (
+      <div
+        style={{
+          padding: "1.5rem",
+          backgroundColor: isDark ? "rgba(15, 23, 42, 0.6)" : "rgba(255, 255, 255, 0.7)",
+          borderRadius: "0.75rem",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          height: "400px",
+          backgroundImage: `linear-gradient(
+            to right,
+            ${isDark ? "rgba(51, 65, 85, 0.3)" : "rgba(229, 231, 235, 0.3)"} 30%,
+            ${isDark ? "rgba(15, 23, 42, 0.6)" : "rgba(243, 244, 246, 0.6)"} 50%,
+            ${isDark ? "rgba(51, 65, 85, 0.3)" : "rgba(229, 231, 235, 0.3)"} 70%
+          )`,
+          backgroundSize: "200% 100%",
+          animation: "shimmer 1.5s infinite",
+        }}
+      ></div>
+    )
+  }
+
+  const containerStyle: React.CSSProperties = {
+    backgroundColor: isDark ? "rgba(15, 23, 42, 0.6)" : "rgba(255, 255, 255, 0.7)",
+    borderRadius: "1rem",
+    padding: "1.5rem",
+    backdropFilter: "blur(12px)",
+    WebkitBackdropFilter: "blur(12px)",
+    border: isDark ? "1px solid rgba(255, 255, 255, 0.08)" : "1px solid rgba(255, 255, 255, 0.7)",
+    boxShadow: isDark
+      ? "0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05) inset"
+      : "0 8px 32px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.5) inset",
+    transition: "all 0.3s ease",
+  }
+
+  const titleStyle: React.CSSProperties = {
+    fontSize: "1.5rem",
+    fontWeight: 700,
+    color: isDark ? "#f9fafb" : "#111827",
+    marginBottom: "1.5rem",
+    display: "flex",
+    alignItems: "center",
+    background: isDark ? "linear-gradient(135deg, #f1f5f9, #94a3b8)" : "linear-gradient(135deg, #111827, #4b5563)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    backgroundClip: "text",
+    textFillColor: "transparent",
+  }
+
+  const tableContainerStyle: React.CSSProperties = {
+    overflowX: "auto",
+    borderRadius: "0.75rem",
+    backgroundColor: isDark ? "rgba(15, 23, 42, 0.4)" : "rgba(255, 255, 255, 0.6)",
+    backdropFilter: "blur(8px)",
+    WebkitBackdropFilter: "blur(8px)",
+    border: isDark ? "1px solid rgba(255, 255, 255, 0.05)" : "1px solid rgba(255, 255, 255, 0.7)",
+  }
+
+  const tableStyle: React.CSSProperties = {
+    width: "100%",
+    borderCollapse: "collapse",
+    fontSize: "0.875rem",
+  }
+
+  const thStyle = (isActive: boolean): React.CSSProperties => ({
+    backgroundColor: isActive
+      ? isDark
+        ? "rgba(99, 102, 241, 0.2)"
+        : "rgba(99, 102, 241, 0.1)"
+      : isDark
+        ? "rgba(15, 23, 42, 0.6)"
+        : "rgba(248, 250, 252, 0.8)",
+    color: isDark ? "#f9fafb" : "#111827",
+    fontWeight: 600,
+    textAlign: "left",
+    padding: "1rem",
+    borderBottom: `1px solid ${isDark ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)"}`,
+    cursor: "pointer",
+    transition: "all 0.2s ease",
+    whiteSpace: "nowrap",
+    backdropFilter: "blur(4px)",
+    WebkitBackdropFilter: "blur(4px)",
+  })
+
+  const tdStyle = (isEven: boolean): React.CSSProperties => ({
+    padding: "1rem",
+    borderBottom: `1px solid ${isDark ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.05)"}`,
+    color: isDark ? "#d1d5db" : "#4b5563",
+    backgroundColor: isEven ? (isDark ? "rgba(15, 23, 42, 0.3)" : "rgba(248, 250, 252, 0.5)") : "transparent",
+    transition: "all 0.2s ease",
+  })
+
+  const scoreBarStyle: React.CSSProperties = {
+    position: "relative",
+    height: "1.5rem",
+    backgroundColor: isDark ? "rgba(51, 65, 85, 0.5)" : "rgba(229, 231, 235, 0.5)",
+    borderRadius: "9999px",
+    overflow: "hidden",
+    width: "100%",
+    minWidth: "120px",
+    backdropFilter: "blur(4px)",
+    WebkitBackdropFilter: "blur(4px)",
+  }
+
+  const scoreBarFillStyle = (value: number): React.CSSProperties => ({
+    position: "absolute",
+    top: 0,
+    left: 0,
+    height: "100%",
+    width: `${value}%`,
+    background: isDark ? "linear-gradient(90deg, #60a5fa, #3b82f6)" : "linear-gradient(90deg, #3b82f6, #1d4ed8)",
+    borderRadius: "9999px",
+    transition: "width 0.3s ease",
+  })
+
+  const scoreBarTextStyle: React.CSSProperties = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#ffffff",
+    fontSize: "0.75rem",
+    fontWeight: 600,
+    textShadow: "0 1px 2px rgba(0, 0, 0, 0.3)",
+    zIndex: 2,
+  }
+
+  return (
+    <div style={containerStyle}>
+      <h2 style={titleStyle}>
+        <GitCompare className="h-6 w-6 mr-2" style={{ color: "#6366f1" }} />
+        Service Comparison
+      </h2>
+      <div style={tableContainerStyle}>
+        <table style={tableStyle}>
+          <thead>
+            <tr>
+              {Object.keys(serviceComparisonData[0]).map((key) => (
+                <th
+                  key={key}
+                  onClick={() => handleSort(key as keyof ServiceComparison)}
+                  style={thStyle(sortField === key)}
+                >
+                  {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, " $1")}
+                  {sortField === key && (
+                    <span style={{ display: "inline-block", marginLeft: "0.5rem" }}>
+                      {sortDirection === "asc" ? (
+                        <TrendingUp size={14} style={{ verticalAlign: "middle" }} />
+                      ) : (
+                        <TrendingDown size={14} style={{ verticalAlign: "middle" }} />
+                      )}
+                    </span>
+                  )}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {sortedData.map((service, index) => (
+              <tr
+                key={index}
+                style={{
+                  transition: "all 0.2s ease",
+                  cursor: "pointer",
+                }}
+              >
+                <td style={tdStyle(index % 2 === 1)}>
+                  <span style={{ fontWeight: 600, color: isDark ? "#f9fafb" : "#111827" }}>{service.provider}</span>
+                </td>
+                <td style={tdStyle(index % 2 === 1)}>
+                  <div style={scoreBarStyle}>
+                    <div style={scoreBarFillStyle(service.accuracy)}></div>
+                    <span style={scoreBarTextStyle}>{service.accuracy}%</span>
+                  </div>
+                </td>
+                <td style={tdStyle(index % 2 === 1)}>
+                  <div style={scoreBarStyle}>
+                    <div style={scoreBarFillStyle(service.speed)}></div>
+                    <span style={scoreBarTextStyle}>{service.speed}%</span>
+                  </div>
+                </td>
+                <td style={tdStyle(index % 2 === 1)}>
+                  <div style={scoreBarStyle}>
+                    <div style={scoreBarFillStyle(service.cost)}></div>
+                    <span style={scoreBarTextStyle}>{service.cost}%</span>
+                  </div>
+                </td>
+                <td style={tdStyle(index % 2 === 1)}>
+                  <div style={scoreBarStyle}>
+                    <div style={scoreBarFillStyle(service.languages)}></div>
+                    <span style={scoreBarTextStyle}>{service.languages}%</span>
+                  </div>
+                </td>
+                <td style={tdStyle(index % 2 === 1)}>
+                  <div style={scoreBarStyle}>
+                    <div style={scoreBarFillStyle(service.apiFeatures)}></div>
+                    <span style={scoreBarTextStyle}>{service.apiFeatures}%</span>
+                  </div>
+                </td>
+                <td style={tdStyle(index % 2 === 1)}>
+                  <div style={scoreBarStyle}>
+                    <div style={scoreBarFillStyle(service.documentation)}></div>
+                    <span style={scoreBarTextStyle}>{service.documentation}%</span>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
 }
